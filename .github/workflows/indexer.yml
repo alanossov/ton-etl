@@ -43,10 +43,14 @@ jobs:
             type=sha,format=long
             type=ref,event=branch
 
+      - name: ls repo
+        run: |
+          ls -la indexer/ton-index-worker/
+
       - name: Build and push Docker image ${{ steps.lower-repo.outputs.repository }}-indexer:${{ env.APP_ENV }}
         uses: docker/build-push-action@v6
         with:
-          context: "{{defaultContext}}:indexer/ton-index-worker"
+          context: "indexer/ton-index-worker/"
           file: indexer/ton-index-worker/Dockerfile
           push: true
           tags: ghcr.io/${{ steps.lower-repo.outputs.repository }}-indexer:${{ env.GITHUB_SHA_SHORT }},ghcr.io/${{ steps.lower-repo.outputs.repository }}-indexer:${{ env.APP_ENV }}
