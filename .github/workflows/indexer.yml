@@ -46,7 +46,8 @@ jobs:
       - name: Build and push Docker image ${{ steps.lower-repo.outputs.repository }}-indexer:${{ env.APP_ENV }}
         uses: docker/build-push-action@v6
         with:
-          context: .
+          #context: .
+          file: indexer/ton-index-worker/Dockerfile
           push: true
           tags: ghcr.io/${{ steps.lower-repo.outputs.repository }}-indexer:${{ env.GITHUB_SHA_SHORT }},ghcr.io/${{ steps.lower-repo.outputs.repository }}-indexer:${{ env.APP_ENV }}
           build-args: |
