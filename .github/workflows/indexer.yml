@@ -49,17 +49,17 @@ jobs:
         run: |
           ls -la indexer/ton-index-worker/
           git submodule update --init --recursive
-          ls -R indexer/ton-index-worker
-          ls -la indexer/ton-index-worker/scripts/
+          cd indexer/ton-index-worker/ && git status
+          ls -la scripts/
 
-      - name: Build and push Docker image ${{ steps.lower-repo.outputs.repository }}-indexer:${{ env.APP_ENV }}
-        uses: docker/build-push-action@v6
-        with:
-          context: indexer/ton-index-worker
-          file: indexer/ton-index-worker/Dockerfile
-          push: true
-          tags: ghcr.io/${{ steps.lower-repo.outputs.repository }}-indexer:${{ env.GITHUB_SHA_SHORT }},ghcr.io/${{ steps.lower-repo.outputs.repository }}-indexer:${{ env.APP_ENV }}
-          build-args: |
-            sha=${{ github.sha }}
-            sha_short=${{ env.GITHUB_SHA_SHORT }}
-            app_env=${{ env.APP_ENV }} 
+#      - name: Build and push Docker image ${{ steps.lower-repo.outputs.repository }}-indexer:${{ env.APP_ENV }}
+#        uses: docker/build-push-action@v6
+#        with:
+#          context: indexer/ton-index-worker
+#          file: indexer/ton-index-worker/Dockerfile
+#          push: true
+#          tags: ghcr.io/${{ steps.lower-repo.outputs.repository }}-indexer:${{ env.GITHUB_SHA_SHORT }},ghcr.io/${{ steps.lower-repo.outputs.repository }}-indexer:${{ env.APP_ENV }}
+#          build-args: |
+#            sha=${{ github.sha }}
+#            sha_short=${{ env.GITHUB_SHA_SHORT }}
+#            app_env=${{ env.APP_ENV }} 
