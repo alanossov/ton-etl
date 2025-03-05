@@ -49,7 +49,7 @@ jobs:
         run: |
           ls -la indexer/ton-index-worker/
           git submodule update --init --recursive
-          cd indexer/ton-index-worker/ && git status
+          cd indexer/ton-index-worker/ && git submodule update --init --recursive
           ls -la scripts/
           docker build -t test:latest -f Dockerfile .
 
