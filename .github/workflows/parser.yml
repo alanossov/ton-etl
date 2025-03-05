@@ -1,4 +1,4 @@
-name: Build and deploy indexer
+name: Build and deploy parser
 
 on:
   workflow_dispatch:
@@ -38,20 +38,20 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ steps.lower-repo.outputs.repository }}-indexer
+          images: ghcr.io/${{ steps.lower-repo.outputs.repository }}-parser
           github-token: ${{ secrets.GITHUB_TOKEN }}
           tags: |
             type=sha
             type=sha,format=long
             type=ref,event=branch
 
-      - name: Build and push Docker image ${{ steps.lower-repo.outputs.repository }}-indexer:${{ env.APP_ENV }}
+      - name: Build and push Docker image ${{ steps.lower-repo.outputs.repository }}-parser:${{ env.APP_ENV }}
         uses: docker/build-push-action@v6
         with:
-          context: indexer/ton-index-worker
-          file: indexer/ton-index-worker/Dockerfile
+          context: parser
+          file: parser/Dockerfile
           push: true
-          tags: ghcr.io/${{ steps.lower-repo.outputs.repository }}-indexer:${{ env.GITHUB_SHA_SHORT }},ghcr.io/${{ steps.lower-repo.outputs.repository }}-indexer:${{ env.APP_ENV }}
+          tags: ghcr.io/${{ steps.lower-repo.outputs.repository }}-parser:${{ env.GITHUB_SHA_SHORT }},ghcr.io/${{ steps.lower-repo.outputs.repository }}-parser:${{ env.APP_ENV }}
           build-args: |
             sha=${{ github.sha }}
             sha_short=${{ env.GITHUB_SHA_SHORT }}
