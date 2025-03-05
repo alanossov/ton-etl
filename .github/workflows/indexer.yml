@@ -49,7 +49,7 @@ jobs:
         run: |
           ls -la indexer/ton-index-worker/
           git submodule update --init --recursive
-          run: ls -R indexer/ton-index-worker
+          ls -R indexer/ton-index-worker
           ls -la indexer/ton-index-worker/scripts/
 
       - name: Build and push Docker image ${{ steps.lower-repo.outputs.repository }}-indexer:${{ env.APP_ENV }}
