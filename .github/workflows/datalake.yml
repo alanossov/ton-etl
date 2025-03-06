@@ -5,6 +5,14 @@ on:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        dockerfile: 
+          - datalake/Dockerfile
+          - datalake/Dockerfile.streaming
+        image_suffix:
+          - ""
+          - "-streaming"
     runs-on: ubuntu-latest
     env:
       APP_ENV: ${{ github.ref == 'refs/heads/main' && 'production' || github.ref == 'refs/heads/canary' && 'canary' || github.ref == 'refs/heads/staging' && 'staging' || 'unknown' }}
@@ -46,14 +54,6 @@ jobs:
             type=ref,event=branch
 
       - name: Build and push Docker images in parallel
-        strategy:
-          matrix:
-            dockerfile: 
-              - datalake/Dockerfile
-              - datalake/Dockerfile.streaming
-            image_suffix:
-              - ""
-              - "-streaming"
         uses: docker/build-push-action@v6
         with:
           context: datalake
